@@ -5,12 +5,11 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
+  activePath: {
+    textDecoration: 'underline',
+    fontWeight: 'bold'
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
+
   title: {
     flexGrow: 1,
     textAlign: "left",
@@ -21,7 +20,7 @@ const redirect = (path) => {
   window.location.replace(path);
 };
 
-export default function Navbar() {
+export default function Navbar({activePath}) {
   const classes = useStyles();
   const routes = [
     {
@@ -49,6 +48,7 @@ export default function Navbar() {
             <Button
               key={index}
               color="inherit"
+              className={activePath === route.slug ? classes.activePath: ''}
               onClick={() => {
                 redirect(route.url);
               }}

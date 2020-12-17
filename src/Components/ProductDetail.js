@@ -8,9 +8,9 @@ import BusinessIcon from "@material-ui/icons/Business";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
 import { makeStyles } from "@material-ui/core/styles";
-
 import "aframe";
 import { Entity, Scene } from "aframe-react";
+import BasicChair from "../Database/Products/BasicChair";
 
 const useStyles = makeStyles((theme) => ({
   FrameContainer: {
@@ -23,6 +23,7 @@ export default function ProductDetail({
   ProductName,
   ProductDescription,
   ProductImg,
+  ProductVrComponent
 }) {
   const classes = useStyles();
 
@@ -69,17 +70,7 @@ export default function ProductDetail({
           </Typography>
         </Grid>
       </Grid>
-      <Scene className={classes.FrameContainer} embedded>
-        {/* Scene Goes Here - Start */}
-        <Entity
-          geometry={{ primitive: "box" }}
-          material={{ color: "red" }}
-          position={{ x: 0, y: 0, z: -5 }}
-        />
-        <Entity light={{ type: "point" }} />
-        <Entity text={{ value: "Hello, WebVR!" }} />
-        {/* Scene Goes Here - End */}
-      </Scene>
+      {ProductVrComponent}
     </div>
   );
 }

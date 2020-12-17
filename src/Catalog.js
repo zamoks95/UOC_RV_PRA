@@ -27,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 let prevActiveProduct = 0;
-const Catalog = () => {
+export default function Catalog() {
   const classes = useStyles();
   const product = ArrayProducts({ totalItems: 9 });
-  const [activeProduct, setActiveProduct] = useState(2);
+  const [activeProduct, setActiveProduct] = useState(0);
 
   /* Product Detail Modal - Start */
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -46,7 +46,7 @@ const Catalog = () => {
   /* Product Detail Modal - End */
   return (
     <div className="App">
-      <Navbar />
+      <Navbar  activePath="Catalog"/>
       <Container maxWidth="lg">
         <Typography variant="h2" component="h1">
           Catalog
@@ -93,10 +93,9 @@ const Catalog = () => {
           ProductName={product[activeProduct].ProductName}
           ProductDescription={product[activeProduct].ProductDescription}
           ProductImg={product[activeProduct].ProductImg}
+          ProductVrComponent={product[activeProduct].ProductVrComponent()}
         />
       </Modal>
     </div>
   );
 };
-
-export default Catalog;

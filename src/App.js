@@ -1,23 +1,20 @@
-import "./App.css";
 import Home from "./Home";
 import Catalog from "./Catalog";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Inspiration from "./Inspiration";
+import NotFound from "./NotFound";
+import { BrowserRouter as Switch, Route, Redirect } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      <Switch>
-        <Route path="/home">
-          <Home />
-        </Route>
-        <Route path="/catalog">
-          <Catalog />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </div>
+    <Switch>
+      <Route exact path="/home" component={Home} />
+      <Route exact path="/catalog" component={Catalog} />
+      <Route exact path="/inspiration" component={Inspiration} />
+      <Route exact path="/">
+        <Redirect to="/home" />
+      </Route>
+      {/* <Route component={NotFound} /> */}
+    </Switch>
   );
 }
 
