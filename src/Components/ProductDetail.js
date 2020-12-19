@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -7,25 +7,31 @@ import RoomIcon from "@material-ui/icons/Room";
 import BusinessIcon from "@material-ui/icons/Business";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
-import { makeStyles } from "@material-ui/core/styles";
 import "aframe";
-import { Entity, Scene } from "aframe-react";
-import BasicChair from "../Database/Products/BasicChair";
+import { CirclePicker } from "react-color";
 
-const useStyles = makeStyles((theme) => ({
-  FrameContainer: {
-    background: "grey",
-    height: "360px",
-  },
-}));
+import BasicChair from "../Database/Products/BasicChair";
+import BasicBed from "../Database/Products/BasicBed";
+import BasicShelf from "../Database/Products/BasicShelf";
+import BasicTable from "../Database/Products/BasicTable";
+import VintageChair from "../Database/Products/VintageChair";
+import VintageTable from "../Database/Products/VintageTable";
+import VintageDecoration from "../Database/Products/VintageDecoration";
 
 export default function ProductDetail({
   ProductName,
   ProductDescription,
   ProductImg,
-  ProductVrComponent
+  ProductVrColor,
+  ProductVrMaterial,
+  ProductId,
 }) {
-  const classes = useStyles();
+  const [productColor, setProductColor] = useState(ProductVrColor);
+  useEffect(() => {
+    if (productColor) {
+      setProductColor("#00FF00");
+    }
+  }, []);
 
   return (
     <div className="ProductDetail">
@@ -69,8 +75,52 @@ export default function ProductDetail({
             <ThumbDownAltIcon /> 6.5€
           </Typography>
         </Grid>
+        {productColor && (
+          <Grid item xs={12}>
+            <Grid
+              container
+              direction="column"
+              justify="space-between"
+              alignItems="top"
+            >
+              <Grid item xs={4}>
+                <Typography component="p">Sel·lecciona un color</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <CirclePicker
+                  triangle="hide"
+                  width={"100%"}
+                  colors={["#FF0000", "#00FF00", "#0000FF", "#000000"]}
+                  onChange={(e) => {
+                    setProductColor(e.hex);
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        )}
       </Grid>
-      {ProductVrComponent}
+      {ProductId === 1 && (
+        <BasicChair material={ProductVrMaterial} color={productColor} />
+      )}
+      {ProductId === 2 && (
+        <BasicBed material={ProductVrMaterial} color={productColor} />
+      )}
+      {ProductId === 3 && (
+        <BasicShelf material={ProductVrMaterial} color={productColor} />
+      )}
+      {ProductId === 4 && (
+        <BasicTable material={ProductVrMaterial} color={productColor} />
+      )}
+      {ProductId === 5 && (
+        <VintageChair material={ProductVrMaterial} color={productColor} />
+      )}
+      {ProductId === 6 && (
+        <VintageTable material={ProductVrMaterial} color={productColor} />
+      )}
+      {ProductId === 7 && (
+        <VintageDecoration material={ProductVrMaterial} color={productColor} />
+      )}
     </div>
   );
 }

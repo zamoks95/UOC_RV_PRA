@@ -46,10 +46,10 @@ export default function Catalog() {
   /* Product Detail Modal - End */
   return (
     <div className="App">
-      <Navbar  activePath="Catalog"/>
+      <Navbar activePath="Catàleg" />
       <Container maxWidth="lg">
-        <Typography variant="h2" component="h1">
-          Catalog
+      <Typography variant="h2" align='left' component="h1" className="form-step__title">
+          Catàleg
         </Typography>
 
         {/* PRODUCTS LIST - START */}
@@ -61,21 +61,26 @@ export default function Catalog() {
             alignItems="center"
           >
             {product.map((item, index) => {
-              if (item.ProductName !== "Default") {
-                return (
-                  <Grid item key={index}>
-                    <ProductCard
-                      ProductName={item.ProductName}
-                      ProductDescription={item.ProductDescription}
-                      ProductImg={item.ProductImg}
-                      ProductActivate={() => {
-                        setActiveProduct(index);
-                      }}
-                    />
-                  </Grid>
-                );
-              }
-              return <Grid item key={index} style={{ display: "none" }} />;
+              return (
+                <Grid
+                  item
+                  key={index}
+                  style={{
+                    display:
+                      item.ProductName === "Default" ? "none" : "initial",
+                  }}
+                >
+                  <ProductCard
+                    ProductName={item.ProductName}
+                    ProductDescription={item.ProductDescription}
+                    ProductImg={item.ProductImg}
+                    ProductVrColor={item.ProductVrColor}
+                    ProductActivate={() => {
+                      setActiveProduct(index);
+                    }}
+                  />
+                </Grid>
+              );
             })}
           </Grid>
         </section>
@@ -93,9 +98,11 @@ export default function Catalog() {
           ProductName={product[activeProduct].ProductName}
           ProductDescription={product[activeProduct].ProductDescription}
           ProductImg={product[activeProduct].ProductImg}
-          ProductVrComponent={product[activeProduct].ProductVrComponent()}
+          ProductVrColor={product[activeProduct].ProductVrColor}
+          ProductVrMaterial={product[activeProduct].ProductVrMaterial}
+          ProductId={product[activeProduct].ProductId}
         />
       </Modal>
     </div>
   );
-};
+}

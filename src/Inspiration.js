@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./App.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -52,16 +53,13 @@ function getSteps() {
 
 const Inspiration = () => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
-
-  const totalSteps = () => {
-    return steps.length;
-  };
-
-  const isLastStep = () => {
-    return activeStep === totalSteps() - 1;
-  };
+  const [filters, setFilters] = useState({
+    color: "",
+    material: "",
+    style: "",
+  });
 
   const handleNext = () => {
     const newActiveStep = activeStep + 1;
@@ -133,18 +131,6 @@ const Inspiration = () => {
               Negre
             </Button>
           </Grid>
-          <Grid item md={4}>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              onClick={() => {
-                colorClick("White");
-              }}
-            >
-              Blanc
-            </Button>
-          </Grid>
         </Grid>
       </div>
     );
@@ -154,7 +140,7 @@ const Inspiration = () => {
   const Step2Form = () => {
     return (
       <div className="form-step">
-        <Typography variant="h2" component="h2" className="form-step__title">
+        <Typography variant="h2" component="h1" className="form-step__title">
           Seleccioneu el vostre material preferit{" "}
         </Typography>
         <Grid
@@ -226,22 +212,10 @@ const Inspiration = () => {
               color="primary"
               fullWidth
               onClick={() => {
-                styleClick("Minimal");
+                styleClick("Basic");
               }}
             >
-              Minimalista
-            </Button>
-          </Grid>
-          <Grid item md={4}>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              onClick={() => {
-                styleClick("Gothic");
-              }}
-            >
-              Gòtic
+              Bàsic
             </Button>
           </Grid>
           <Grid item md={4}>
@@ -276,17 +250,32 @@ const Inspiration = () => {
   }
 
   const colorClick = (color) => {
-    console.log(color);
+    let newFilters = {
+      color: color,
+      material: filters.material,
+      style: filters.style,
+    };
+    setFilters(newFilters);
     handleNext();
   };
 
   const materialClick = (material) => {
-    console.log(material);
+    let newFilters = {
+      color: filters.color,
+      material: material,
+      style: filters.style,
+    };
+    setFilters(newFilters);
     handleNext();
   };
 
   const styleClick = (style) => {
-    console.log(style);
+    let newFilters = {
+      color: filters.color,
+      material: filters.material,
+      style: style,
+    };
+    setFilters(newFilters);
     setFormFinished(true);
   };
 
@@ -308,10 +297,10 @@ const Inspiration = () => {
   const product = ArrayProducts({ totalItems: 9 });
   return (
     <div className="App">
-      <Navbar activePath="Inspiration" />
+      <Navbar activePath="Inspiració" />
 
       <Container maxWidth="lg">
-        <Typography variant="h1" component="h1" className="form-step__title">
+        <Typography variant="h2" component="h1" align="left">
           Inspiració
         </Typography>
         {!formFinished && (
@@ -346,8 +335,21 @@ const Inspiration = () => {
               >
                 {product.map((item, index) => {
                   if (item.ProductName !== "Default") {
+                    let productVisible = false;
+
+                    if (
+                      item.ProductName.includes(filters.material) &&
+                      item.ProductName.includes(filters.style)
+                    ) {
+                      productVisible = true;
+                    }
+
                     return (
-                      <Grid item key={index}>
+                      <Grid
+                        item
+                        key={index}
+                        style={{ display: productVisible ? "initial" : "none" }}
+                      >
                         <ProductCard
                           ProductName={item.ProductName}
                           ProductDescription={item.ProductDescription}
@@ -379,6 +381,9 @@ const Inspiration = () => {
           ProductName={product[activeProduct].ProductName}
           ProductDescription={product[activeProduct].ProductDescription}
           ProductImg={product[activeProduct].ProductImg}
+          ProductVrColor={product[activeProduct].ProductVrColor}
+          ProductVrMaterial={product[activeProduct].ProductVrMaterial}
+          ProductId={product[activeProduct].ProductId}
         />
       </Modal>
     </div>

@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     textAlign: "left",
   },
+  subtitle: {
+    fontSize: '15px',
+    paddingLeft: '10px'
+  }
 }));
 
 const redirect = (path) => {
@@ -24,24 +28,28 @@ export default function Navbar({activePath}) {
   const classes = useStyles();
   const routes = [
     {
-      slug: "Home",
-      url: "/",
-    },
-    {
-      slug: "Catalog",
+      slug: "Catàleg",
       url: "/catalog",
     },
     {
-      slug: "Inspiration",
+      slug: "Inspiració",
       url: "/inspiration",
+    },
+    {
+      slug: "Visualitzador",
+      url: "/visualizer",
     },
   ];
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
           UOC RV - PRA
+          
+        <Typography variant="body2" className={classes.subtitle}>
+          Sergi Zamora
+        </Typography>
         </Typography>
         {routes.map((route, index) => {
           return (
